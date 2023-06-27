@@ -3,7 +3,7 @@ apiVersion: autoscaling/v2{{- if semverCompare "<1.23" .Capabilities.KubeVersion
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "ambassador.fullname" . }}
-  namespace: {{ include "ambassador.namespace" . }}
+  namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
   labels:
     app.kubernetes.io/name: {{ include "ambassador.name" . }}
     {{- include "ambassador.labels" . | nindent 4 }}

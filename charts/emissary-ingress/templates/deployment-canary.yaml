@@ -8,7 +8,7 @@ metadata:
   {{- else }}
   name: {{ include "ambassador.fullname" . }}-canary
   {{- end }}
-  namespace: {{ include "ambassador.namespace" . }}
+  namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
   labels:
     app.kubernetes.io/name: {{ include "ambassador.name" . }}
     {{- include "ambassador.labels" . | nindent 4 }}
@@ -138,7 +138,7 @@ spec:
           {{- if ne (include "ambassador.canaryImage" .)  "" }}
           image: {{ include "ambassador.canaryImage" . }}
           {{- else }}
-          image: {{ include "ambassador.image" . }}
+          image: {{ .Values.sourceRegistry }}/{{ include "image.repository.path" .Values.image }}
           {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

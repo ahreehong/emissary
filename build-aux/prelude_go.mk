@@ -75,7 +75,7 @@ _prelude.go.VERSION.ge = $(call _prelude.go.VERSION._ge,$(call _prelude.go.VERSI
 #
 # Evaluates to $(TRUE) if `go` is >= the specified version, $(FALSE)
 # otherwise.
-_prelude.go.VERSION.HAVE = $(if $(_prelude.go.HAVE),$(call _prelude.go.VERSION.ge,$(_prelude.go.VERSION),$1))
+_prelude.go.VERSION.HAVE = $(TRUE)
 
 #
 # Building Go programs for use by build-aux

@@ -1,0 +1,11 @@
+imagePullSecrets: []
+
+sourceRegistry: "public.ecr.aws/eks-anywhere"
+
+image:
+  # Emissary Ingress ecr repo
+  repository: emissary-ingress/emissary
+  digest: {{emissary-ingress/emissary}}
+  tag:
+  # Pod container image pull policy
+  pullPolicy: IfNotPresent

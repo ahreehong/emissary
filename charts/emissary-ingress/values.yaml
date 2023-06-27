@@ -2,11 +2,11 @@
 nameOverride: ''
 # Override the generated release name. Defaults to .Release.Name.
 fullnameOverride: ''
-# Override the generated release namespace. Defaults to .Release.Namespace.
-namespaceOverride: ''
+
+defaultNamespace: emissary-system
 
 # Number of Ambassador replicas
-replicaCount: 3
+replicaCount: 2
 # If true, Create a DaemonSet. By default Deployment controller will be created
 daemonSet: false
 # If true, Create a bare Pod instead of a Deployment or DaemonSet; for
@@ -148,11 +148,13 @@ security:
     #   runAsUser:
     #     rule: MustRunAsNonRoot
 
+sourceRegistry: "public.ecr.aws/eks-anywhere"
+
 image:
-  # Emissary Ingress docker repo
-  repository: @imageRepo@
-  # Emissary Ingress docker tag
-  tag: @version@
+  # Emissary Ingress ecr repo
+  repository: emissary-ingress/emissary
+  digest: {{emissary-ingress/emissary}}
+  tag:
   # Pod container image pull policy
   pullPolicy: IfNotPresent
 
@@ -357,7 +359,6 @@ resolvers: # +doc-gen:break
 module:
   diagnostics:
     enabled: false
-    allow_non_local: true
 
 # DEPRECATED: Enabling the prometheus exporter creates a sidecar and configures ambassador to use it
 #
@@ -392,40 +393,6 @@ prometheusExporter: # +doc-gen:break
 # DEPRECATED: Use security.podSecurityContext
 # securityContext:
 #   runAsUser: 8888
-
-
-# Configure the ambassador agent
-agent:
-  # If `true`, installs the ambassador-agent Deployment, ServiceAccount and ClusterRole in the ambassador namespace, enabling the Ambassador Cloud connectivity.
-  enabled: true
-  # API token for reporting snapshots to [Ambassador Cloud](https://app.getambassador.io/cloud/);
-  # If empty, agent will not report snapshots
-  cloudConnectToken: ''
-  # Address of the Ambassador Cloud rpc server.
-  rpcAddress: https://app.getambassador.io/
-
-  # If `true`, Ambassador Agent will report diagnostics to Ambassador Cloud
-  reportDiagnostics: true
-
-  createArgoRBAC: true
-  image:
-    # Leave blank to use image.repository and image.tag
-    tag: 1.0.3
-    repository: docker.io/ambassador/ambassador-agent
-    pullPolicy: IfNotPresent
-
-  podSecurityContext: {}
-  # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#podsecuritycontext-v1-core
-  #  runAsUser: 8888
-
-  containerSecurityContext: {}
-  # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#securitycontext-v1-core
-  # allowPrivilegeEscalation: false
-
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
-
 
 deploymentTool: ''
 
