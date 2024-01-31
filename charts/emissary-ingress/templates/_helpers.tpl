@@ -78,18 +78,6 @@ disabled if fullImageOverride is present
 {{- end -}}
 {{- end -}}
 
-
-{{/*
-Create chart namespace based on override value.
-*/}}
-{{- define "ambassador.namespace" -}}
-{{- if .Values.namespaceOverride -}}
-{{- .Values.namespaceOverride -}}
-{{- else -}}
-{{- .Release.Namespace -}}
-{{- end -}}
-{{- end -}}
-
 {{/*
 Create chart name and version as used by the chart label.
 */}}
@@ -124,4 +112,9 @@ Define the http port of the Ambassador service
 {{ default .port }}
 {{- end -}}
 {{- end -}}
+{{- end -}}
+
+{{/* Generate image repository path. */}}
+{{- define "image.repository.path" -}}
+{{- .repository }}@{{ .digest -}}
 {{- end -}}

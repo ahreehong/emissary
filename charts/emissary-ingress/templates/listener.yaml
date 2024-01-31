@@ -4,7 +4,7 @@ apiVersion: getambassador.io/v3alpha1
 kind: Listener
 metadata:
   name: {{ include "ambassador.fullname" . }}-https-listener
-  namespace: {{ include "ambassador.namespace" . }}
+  namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
 spec:
   port: 8443
   protocol: HTTPS
@@ -21,7 +21,7 @@ apiVersion: getambassador.io/v3alpha1
 kind: Listener
 metadata:
   name: {{ include "ambassador.fullname" . }}-http-listener
-  namespace: {{ include "ambassador.namespace" . }}
+  namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
 spec:
   port: 8080
   protocol: HTTP

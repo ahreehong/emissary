@@ -35,7 +35,7 @@ roleRef:
   name: {{ include "ambassador.rbacName" . }}
 subjects:
   - name: {{ include "ambassador.serviceAccountName" . }}
-    namespace: {{ include "ambassador.namespace" . }}
+    namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
     kind: ServiceAccount
 
 ---
@@ -68,7 +68,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ include "ambassador.rbacName" . }}
-  namespace: {{ include "ambassador.namespace" . }}
+  namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
 {{- else }}
 kind: ClusterRole
 metadata:
@@ -139,7 +139,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ include "ambassador.rbacName" . }}
-  namespace: {{ include "ambassador.namespace" . }}
+  namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
   labels:
     app.kubernetes.io/name: {{ include "ambassador.name" . }}
     {{- include "ambassador.labels" . | nindent 4 }}
@@ -150,7 +150,7 @@ roleRef:
   name: {{ include "ambassador.rbacName" . }}
 subjects:
   - name: {{ include "ambassador.serviceAccountName" . }}
-    namespace: {{ include "ambassador.namespace" . }}
+    namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
     kind: ServiceAccount
 {{- end }}
 {{- if and .Values.waitForApiext (eq .Values.waitForApiext.enabled true) (eq .Values.waitForApiext.createRoles true) }}
@@ -170,7 +170,7 @@ roleRef:
   name: {{ include "ambassador.rbacName" . }}-apiext
 subjects:
   - name: {{ include "ambassador.serviceAccountName" . }}
-    namespace: {{ include "ambassador.namespace" . }}
+    namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
     kind: ServiceAccount
 ---
 apiVersion: rbac.authorization.k8s.io/v1

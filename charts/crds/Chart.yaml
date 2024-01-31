@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: v3.6.0
+description: Emissary CRDs
+type: application
+version: 3.6.0-d0c301dec3634d263f8957745c8557a39caf8204
+name: crds

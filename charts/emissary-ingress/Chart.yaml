@@ -1,0 +1,26 @@
+apiVersion: v2
+appVersion: 3.6.0
+description: A Helm chart for Emissary Ingress
+home: https://www.getambassador.io/
+icon: https://www.getambassador.io/images/logo.png
+keywords:
+- api gateway
+- ambassador
+- datawire
+- envoy
+- emissary
+- emissary ingress
+maintainers:
+- email: markus@maga.se
+  name: flydiverny
+- email: flynn@datawire.io
+  name: kflynn
+- email: nkrause@datawire.io
+  name: nbkrause
+- email: lukeshu@datawire.io
+  name: lukeshu
+name: emissary
+sources:
+- https://github.com/datawire/ambassador
+- https://github.com/prometheus/statsd_exporter
+version: 3.6.0-d0c301dec3634d263f8957745c8557a39caf8204

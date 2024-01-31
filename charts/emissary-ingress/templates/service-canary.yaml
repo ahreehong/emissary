@@ -8,7 +8,7 @@ metadata:
   {{- else }}
   name: {{ include "ambassador.fullname" . }}-canary
   {{- end }}
-  namespace: {{ include "ambassador.namespace" . }}
+  namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
   labels:
     app.kubernetes.io/name: {{ include "ambassador.name" . }}
     {{- include "ambassador.labels" . | nindent 4 }}
@@ -22,7 +22,7 @@ metadata:
     a8r.io/chat: http://a8r.io/Slack
     a8r.io/bugs: https://github.com/datawire/ambassador/issues
     a8r.io/support: https://www.getambassador.io/about-us/support/
-    a8r.io/dependencies: {{ include "ambassador.fullname" . }}-redis.{{ include "ambassador.namespace" . }}
+    a8r.io/dependencies: {{ include "ambassador.fullname" . }}-redis.{{ .Release.Namespace | default .Values.defaultNamespace | quote }}
 {{- if .Values.service.annotations }}
   {{- range $key, $value := .Values.service.annotations }}
     {{ $key }}: {{ $value | quote }}

@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Pod
 metadata:
       name: {{ include "ambassador.fullname" . }}
-      namespace: {{ include "ambassador.namespace" . }}
+      namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
 {{- else }}
 {{- if .Values.daemonSet }}
 apiVersion: apps/v1
@@ -18,7 +18,7 @@ metadata:
   {{- else }}
   name: {{ include "ambassador.fullname" . }}
   {{- end }}
-  namespace: {{ include "ambassador.namespace" . }}
+  namespace: {{ .Release.Namespace | default .Values.defaultNamespace | quote }}
   labels:
     app.kubernetes.io/name: {{ include "ambassador.name" . }}
     {{- include "ambassador.labels" . | nindent 4 }}
@@ -200,7 +200,7 @@ spec:
             {{- toYaml .Values.prometheusExporter.resources | nindent 12 }}
         {{- end }}
         - name: {{ if .Values.containerNameOverride }}{{ .Values.containerNameOverride }}{{ else }}{{ .Chart.Name }}{{ end }}
-          image: {{ include "ambassador.image" . }}
+          image: {{ .Values.sourceRegistry }}/{{ include "image.repository.path" .Values.image }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             {{- range .Values.service.ports }}
